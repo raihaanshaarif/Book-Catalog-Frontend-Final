@@ -26,7 +26,7 @@ const RecentBooks = () => {
         </div>
       </section>
       <div className="flex gap-6">
-        <div className="flex basis-1/4 flex-col justify-center items-center bg-gray-100 hover:shadow-2xl rounded ">
+        <div className="flex  gap-5 justify-center items-center bg-gray-100  rounded  flex-wrap basis-4/4">
           {data?.data?.map((book: IBook, index: string) => (
             <Book key={index} book={book} />
           ))}

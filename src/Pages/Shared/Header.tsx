@@ -39,20 +39,20 @@ const Navbar = () => {
           >
             {Links.map((link, index) => (
               <li key={index} className="md:ml-8 md:my-0 my-7 font-semibold">
-                <a
-                  href={link.link}
+                <Link to={link.link}
+                  
                   className="text-gray-800 hover:text-blue-400 duration-500"
                 >
                   {link.name}
-                </a>
+                </Link>
               </li>
             ))}
-            <button className="btn bg-blue-600 text-white md:ml-5 font-semibold px-3 py-1 rounded duration-500 md:static hover:bg-blue-500">
+            <Link to={'/signup'} className="btn bg-blue-600 text-white md:ml-5 font-semibold px-3 py-1 rounded duration-500 md:static hover:bg-blue-500">
               SignUp
-            </button>
-            <button className="btn bg-blue-600 text-white md:ml-3 font-semibold px-3 py-1 rounded duration-500 md:static hover:bg-blue-500">
+            </Link>
+            <Link to={'/login'} className="btn bg-blue-600 text-white md:ml-3 font-semibold px-3 py-1 rounded duration-500 md:static hover:bg-blue-500">
               SignIn
-            </button>
+            </Link>
           </ul>
           {/* button */}
         </div>
