@@ -5,6 +5,9 @@ import Home from "../Pages/Home/Home/Home";
 import BookDetail from "../Pages/BookDetail/BookDetail";
 import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/SignUp/SignUp";
+import Books from "../Pages/Books/Books";
+import AddBook from "../Pages/AddBook/AddBook";
+import PrivateRoute from "../Components/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -26,8 +29,15 @@ export const router = createBrowserRouter([
       {
         path: "/signup",
         element: <SignUp />,
-      }
-      
+      },
+      {
+        path: "/books",
+        element: <Books />,
+      },
+      {
+        path: "/add-book",
+        element: <PrivateRoute element={<AddBook />} />,
+      },
     ],
   },
 ]);

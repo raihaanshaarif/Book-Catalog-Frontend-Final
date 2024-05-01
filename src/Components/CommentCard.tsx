@@ -1,10 +1,11 @@
 import { useForm } from "react-hook-form";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   useGetCommentsQuery,
   usePostCommentsMutation,
 } from "../Redux/book/bookApi";
+import toast from "react-hot-toast";
 type FormInputs = {
   comment: string;
 };
@@ -13,24 +14,31 @@ const CommentCard = () => {
   const { id } = useParams();
   const { data } = useGetCommentsQuery(id);
   const [inputValue, setInputValue] = useState<string>();
-  const [postComment] = usePostCommentsMutation();
+  const [postComment, { isSuccess, isError, data: commentData }] =
+    usePostCommentsMutation();
 
   const { register, getValues } = useForm<FormInputs>();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //  console.log("from Card",inputValue);
 
     const options = {
       id: id,
       data: { comments: inputValue },
-
     };
-    console.log(options);
 
     postComment(options);
+
     setInputValue("");
   };
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(commentData.message);
+    }
+    if (isError) {
+      toast.error(commentData.message);
+    }
+  });
 
   // const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
   //   setInputValue(event.target.value);
@@ -42,9 +50,11 @@ const CommentCard = () => {
         <form onSubmit={handleSubmit}>
           <input
             className="border px-10 py-2 w-[600px]"
-            {...register("comment")} value={inputValue}
+            {...register("comment")}
+            value={inputValue}
           />
-          <button className=" border px-7 py-2 ml-3 bg-blue-600 text-white rounded hover:bg-blue-400"
+          <button
+            className=" border px-7 py-2 ml-3 bg-blue-600 text-white rounded hover:bg-blue-400"
             type="submit"
             onClick={() => {
               const value = getValues("comment");

@@ -1,17 +1,30 @@
 import { useState } from "react";
-
 import { HiBookOpen } from "react-icons/hi";
 import { HiBars3, HiXMark } from "react-icons/hi2";
 import { Link } from "react-router-dom";
+import { RootState } from "../../Redux/store";
+import { useAppDispatch, useAppSelector } from "../../Redux/hooks";
+import { logout } from "../../Redux/auth/authSlice";
 
 const Navbar = () => {
   const Links = [
     { name: "HOME", link: "/" },
-    { name: "SERVICE", link: "/" },
-    { name: "ABOUT", link: "/" },
-    { name: "CONTACT", link: "/" },
+    { name: "BOOKS", link: "/books" },
+    { name: "ADD BOOK", link: "/add-book" },
   ];
+
   const [open, setOpen] = useState(false);
+
+  // access Credentials from State
+  const user = useAppSelector((state: RootState) => state.auth.user);
+  // console.log(user?.email, user?._id);
+
+  // Handle Signout from State
+  const dispatch = useAppDispatch();
+
+  const handleSignOut = () => {
+    dispatch(logout());
+  };
 
   return (
     <div className="">
@@ -39,20 +52,38 @@ const Navbar = () => {
           >
             {Links.map((link, index) => (
               <li key={index} className="md:ml-8 md:my-0 my-7 font-semibold">
-                <Link to={link.link}
-                  
+                <Link
+                  to={link.link}
                   className="text-gray-800 hover:text-blue-400 duration-500"
                 >
                   {link.name}
                 </Link>
               </li>
             ))}
-            <Link to={'/signup'} className="btn bg-blue-600 text-white md:ml-5 font-semibold px-3 py-1 rounded duration-500 md:static hover:bg-blue-500">
-              SignUp
-            </Link>
-            <Link to={'/login'} className="btn bg-blue-600 text-white md:ml-3 font-semibold px-3 py-1 rounded duration-500 md:static hover:bg-blue-500">
-              SignIn
-            </Link>
+
+            {user?.email ? (
+              <button
+                onClick={handleSignOut}
+                className="btn bg-blue-600 text-white md:ml-5 font-semibold px-3 py-1 rounded duration-500 md:static hover:bg-blue-500"
+              >
+                Signout
+              </button>
+            ) : (
+              <div>
+                <Link
+                  to={"/signup"}
+                  className="btn bg-blue-600 text-white md:ml-5 font-semibold px-3 py-1 rounded duration-500 md:static hover:bg-blue-500"
+                >
+                  SignUp
+                </Link>
+                <Link
+                  to={"/login"}
+                  className="btn bg-blue-600 text-white md:ml-3 font-semibold px-3 py-1 rounded duration-500 md:static hover:bg-blue-500"
+                >
+                  SignIn
+                </Link>
+              </div>
+            )}
           </ul>
           {/* button */}
         </div>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import slide1 from "./../../../assets/Untitled-1.png";
 
 const Banner = () => {
@@ -10,14 +11,17 @@ const Banner = () => {
             The Best <br />
             Online Book Shop
           </h2>
-          <p className="mt-5 font-light ">
+          <p className="mt-5 font-light mb-5 ">
             Boighor specifically created for authors and writes to present and{" "}
             <br />
             sell their books online Soufflé tart sweet.{" "}
           </p>
-          <button className="btn mt-5 bg-blue-600 text-white  font-semibold  py-3 px-9 rounded duration-500 md:static hover:bg-blue-500">
+          <Link
+            to={"/books"}
+            className="btn  bg-blue-600 text-white  font-semibold  py-3 px-9 rounded duration-500 md:static hover:bg-blue-500"
+          >
             Show Books
-          </button>
+          </Link>
         </div>
         <div className="hidden  justify-center md:flex ">
           <img className="lg:w-3/5 " src={slide1} alt="..." />

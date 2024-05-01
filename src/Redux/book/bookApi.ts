@@ -2,6 +2,13 @@ import { api } from "../api/apiSlice";
 
 const bookApi = api.injectEndpoints({
   endpoints: (builder) => ({
+    postBook: builder.mutation({
+      query: ({ data }) => ({
+        url: `/book/create-book`,
+        method: "POST",
+        body: data,
+      }),
+    }),
     getBooks: builder.query({
       query: () => `/book`,
     }),
@@ -10,6 +17,7 @@ const bookApi = api.injectEndpoints({
     }),
     getComments: builder.query({
       query: (id) => `/book/comment/${id}`,
+      providesTags: ["comment"],
     }),
     postComments: builder.mutation({
       query: ({ id, data }) => ({
@@ -17,6 +25,7 @@ const bookApi = api.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["comment"],
     }),
   }),
 });
@@ -26,4 +35,5 @@ export const {
   useGetBookByIdQuery,
   useGetCommentsQuery,
   usePostCommentsMutation,
+  usePostBookMutation,
 } = bookApi;
