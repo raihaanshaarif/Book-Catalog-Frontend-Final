@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { HiBookOpen } from "react-icons/hi";
-import { HiBars3, HiXMark } from "react-icons/hi2";
+
+import {HiBookOpen, HiBars3, HiXMark } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import { RootState } from "../../Redux/store";
 import { useAppDispatch, useAppSelector } from "../../Redux/hooks";

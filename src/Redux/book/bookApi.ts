@@ -15,6 +15,13 @@ const bookApi = api.injectEndpoints({
     getBookById: builder.query({
       query: (id) => `/book/${id}`,
     }),
+    patchBook: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/book/${id}`,
+        method: "PATCH",
+        body: { id, data },
+      }),
+    }),
     getComments: builder.query({
       query: (id) => `/book/comment/${id}`,
       providesTags: ["comment"],
@@ -33,6 +40,7 @@ const bookApi = api.injectEndpoints({
 export const {
   useGetBooksQuery,
   useGetBookByIdQuery,
+  usePatchBookMutation,
   useGetCommentsQuery,
   usePostCommentsMutation,
   usePostBookMutation,

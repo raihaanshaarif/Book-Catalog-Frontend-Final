@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetBookByIdQuery } from "../../Redux/book/bookApi";
 import CommentCard from "../../Components/CommentCard";
 
@@ -26,6 +26,10 @@ const BookDetail = () => {
             <h2 className="md:text-xl ">
               Publication Date: {data?.data?.publicationDate}
             </h2>
+          </div>
+          <div>
+            <Link to={`/editbook/${id}`} className="bg-blue-600 rounded px-5 py-2 hover:bg-blue-400 mr-2">Edit Book</Link>
+            <button className="bg-blue-600 rounded px-5 py-2 hover:bg-blue-400">Delete Book</button>
           </div>
         </div>
       </div>

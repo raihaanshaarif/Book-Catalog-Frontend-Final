@@ -60,7 +60,7 @@ const filteredData = data?.data
 ? filterBooks(data.data, searchTGAValue, searchGenreValue, searchAuthorValue)
 : [];
 
-  console.log(filteredData);
+
 
   return (
     <div className="container mx-auto mt-[100px] border-b-2">
