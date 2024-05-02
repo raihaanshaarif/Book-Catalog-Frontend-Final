@@ -2,51 +2,63 @@ import { useState } from "react";
 import Book from "../../Components/Book";
 import { useGetBooksQuery } from "../../Redux/book/bookApi";
 import { IBook } from "../../Types/globalTypes";
-
 import { useDispatch } from "react-redux";
-import { searchedText } from "../../Redux/book/bookSlice";
-
-// type FilterType = {
-//   searchByTitle?: string;
-//   searchByAuthor?: string;
-//   searchByGenre?: string;
-// };
+import { searchByAuthor, searchByGenre, searchByTGA} from "../../Redux/book/bookSlice";
 
 const Books = () => {
   const dispatch = useDispatch();
   //Get Books from API
   const { data } = useGetBooksQuery(undefined);
 
-  // Get Search By Name Input Value
-  const [searchValue, setSearchValue] = useState("");
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
+  // Get Search  Value
+  const [searchTGAValue, setsearchTGAValue] = useState("");
+  const [searchGenreValue, setSearchGenreValue] = useState("");
+  const [searchAuthorValue, setSearchAuthorValue] = useState("");
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setsearchTGAValue(e.target.value);
+  };
+  const handleGenreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchGenreValue(e.target.value);
+  };
+  const handleAuthorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchAuthorValue(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleTitleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Do something with searchValue, such as passing it to a search function
-    console.log("Search value:", searchValue);
-    dispatch(searchedText(searchValue));
+    // Do something with searchValue, such as passing it to a search function 
+    dispatch(searchByGenre(searchGenreValue))
+    dispatch(searchByAuthor(searchAuthorValue))
+    dispatch(searchByTGA(searchTGAValue))
+    
+
   };
-
   // Find and Get FIltered Data's from data
-
-  const filterBooksByTitle = (books: IBook[] | undefined, title: string) => {
-    if (!books || !Array.isArray(books)) {
+// Find and Get Filtered Data from data
+const filterBooks = (books: IBook[] | undefined, tga: string, genre: string, author: string) => {
+  if (!books || !Array.isArray(books)) {
       console.error("Invalid or missing books data");
       return [];
-    }
-    if (!title) {
-      return books;
-    }
-    return books.filter((book) =>
-      book.title.toLowerCase().includes(title.toLowerCase())
-    );
-  };
-  const filteredData = data?.data
-    ? filterBooksByTitle(data.data, searchValue)
-    : [];
+  }
+  return books.filter(book => {
+      const tgaMatch = tga ? (
+          book.title.toLowerCase().includes(tga.toLowerCase()) ||
+          book.genre.toLowerCase().includes(tga.toLowerCase()) ||
+          book.author.toLowerCase().includes(tga.toLowerCase())
+      ) : true;
+     
+      const genreMatch = genre ? book.genre.toLowerCase().includes(genre.toLowerCase()) : true;
+      const authorMatch = author ? book.author.toLowerCase().includes(author.toLowerCase()) : true;
+
+      return tgaMatch && genreMatch && authorMatch;
+  });
+};
+
+
+const filteredData = data?.data
+? filterBooks(data.data, searchTGAValue, searchGenreValue, searchAuthorValue)
+: [];
 
   console.log(filteredData);
 
@@ -54,32 +66,36 @@ const Books = () => {
     <div className="container mx-auto mt-[100px] border-b-2">
       <div className="grid grid-cols-12">
         <div className=" col-span-2 border-r-2">
-          <div className="mr-2">
+          <div className="mr-4">
             <div></div>
             <div>
-              <form
-                className=" flex flex-col"
-                // onSubmit={handleSubmit(onSubmit)}
-              >
-                {/* Use shouldUnregister option with register */}
+              <div className="text-center mb-2"> Filter</div>
+              <div className=" ">
+                <form onSubmit={handleTitleSubmit}>
+                    
+                     <input
+                      className="border rounded py-3 indent-6 w-full mb-2 border-blue-400 focus:border-blue-500"
+                      type="text"
+                      value={searchGenreValue}
+                      onChange={handleGenreChange}
+                      placeholder="Search by Genre"
+                    />
+                     <input
+                      className="border rounded py-3 indent-6 w-full mb-2 border-blue-400 focus:border-blue-500"
+                      type="text"
+                      value={searchAuthorValue}
+                      onChange={handleAuthorChange}
+                      placeholder="Search by Author"
+                    />
+                    
+                </form>
+                
+                   
+                  
+              
 
-                <label>Author</label>
-                <input
-                  className="border-2 rounded "
-                  // {...register("searchByAuthor", { shouldUnregister: true })}
-                />
-                <label>Genre</label>
-                <input
-                  className="border-2 rounded "
-                  // {...register("searchByGenre", { shouldUnregister: true })}
-                />
-                <button
-                  className="bg-blue-600 rounded text-white hover:bg-blue-400 mt-2"
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </form>
+
+              </div>
             </div>
           </div>
         </div>
@@ -104,13 +120,13 @@ const Books = () => {
             </section>
             <section>
               <div className=" flex justify-center items-center mb-5">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleTitleSubmit}>
                   <input
-                    className="border rounded w-[500px] py-3 indent-6"
+                    className="border rounded w-[500px] py-3 indent-6  border-blue-400 focus:border-blue-500"
                     type="text"
-                    value={searchValue}
-                    onChange={handleChange}
-                    placeholder="Search by title"
+                    value={searchTGAValue}
+                    onChange={handleTitleChange}
+                    placeholder="Search by title, genre or author"
                   />
                   {/* <button type="submit">Search</button> */}
                 </form>
