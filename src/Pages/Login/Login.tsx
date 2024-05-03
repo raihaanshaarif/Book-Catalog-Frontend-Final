@@ -1,12 +1,12 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginimag from "../.././assets/6310507.jpg";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useLoginUserMutation } from "../../Redux/user/userApi";
+import { useLoginUserMutation } from "../../Redux/features/user/userApi";
 import { useEffect } from "react";
 
 import { useAppDispatch } from "../../Redux/hooks";
 
-import { setCredentials } from "../../Redux/auth/authSlice";
+import { setCredentials } from "../../Redux/features/auth/authSlice";
 import toast from "react-hot-toast";
 
 interface LoginFormInputs {
@@ -16,6 +16,9 @@ interface LoginFormInputs {
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirect = new URLSearchParams(location.search).get("redirect");
+
   const [loginUser, { data, isSuccess, isError }] = useLoginUserMutation();
 
   const { register, handleSubmit } = useForm<LoginFormInputs>();
@@ -39,9 +42,10 @@ const Login = () => {
 
       toast.success(data.message);
       dispatch(setCredentials({ user, token }));
-      navigate("/");
+      console.log(redirect);
+      navigate(redirect || "/");
     }
-  }, [isSuccess, isError]);
+  }, [isSuccess, isError, data, dispatch, navigate, redirect]);
 
   return (
     <div className="container mx-auto mt-20">

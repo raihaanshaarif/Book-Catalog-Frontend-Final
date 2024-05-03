@@ -1,16 +1,18 @@
 import { useState } from "react";
 
-import {HiBookOpen, HiBars3, HiXMark } from "react-icons/hi2";
+import { HiBookOpen, HiBars3, HiXMark } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import { RootState } from "../../Redux/store";
 import { useAppDispatch, useAppSelector } from "../../Redux/hooks";
-import { logout } from "../../Redux/auth/authSlice";
+import { logout } from "../../Redux/features/auth/authSlice";
 
 const Navbar = () => {
   const Links = [
     { name: "HOME", link: "/" },
     { name: "BOOKS", link: "/books" },
     { name: "ADD BOOK", link: "/add-book" },
+    { name: "WISHLIST", link: "/wishlist" },
+    { name: "READINGLIST", link: "/readinglist" },
   ];
 
   const [open, setOpen] = useState(false);

@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../store";
+import { RootState } from "../../store";
 type IUser = {
   _id?: string;
   email: string;

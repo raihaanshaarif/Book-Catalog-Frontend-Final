@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import loginimag from "../.././assets/6310507.jpg";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useCreateUserMutation } from "../../Redux/user/userApi";
+import { useCreateUserMutation } from "../../Redux/features/user/userApi";
 
 interface SignupFormInputs {
   email: string;

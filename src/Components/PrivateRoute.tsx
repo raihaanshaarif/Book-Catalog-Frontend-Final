@@ -1,11 +1,27 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../Redux/store";
-import { Navigate } from "react-router-dom";
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
-const PrivateRoute = ({ element }: { element: React.ReactNode }) => {
-  const token = useSelector((state: RootState) => state.auth.token);
+import { Navigate, useLocation } from "react-router-dom";
 
-  return token ? element : <Navigate to="/login" />;
+type PrivateRouteProps = {
+  element: React.ReactNode;
+  // Add any other props if needed
+};
+
+const PrivateRoute: React.FC<PrivateRouteProps> = ({
+  element,
+  ...rest
+}: PrivateRouteProps) => {
+  // const user = useAppSelector((state: RootState) => state.auth.user);
+  const isAuthenticated = localStorage.getItem("user") !== null;
+  console.log(isAuthenticated);
+
+  const location = useLocation();
+
+  return isAuthenticated ? (
+    element
+  ) : (
+    <Navigate to={`/login?redirect=${location.pathname}`} />
+  );
 };
 
 export default PrivateRoute;

@@ -1,5 +1,5 @@
 import Book from "../../../Components/Book";
-import { useGetBooksQuery } from "../../../Redux/book/bookApi";
+import { useGetBooksQuery } from "../../../Redux/features/book/bookApi";
 
 import { IBook } from "../../../Types/globalTypes";
 

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import {
   useGetCommentsQuery,
   usePostCommentsMutation,
-} from "../Redux/book/bookApi";
+} from "../Redux/features/book/bookApi";
 import toast from "react-hot-toast";
 type FormInputs = {
   comment: string;
