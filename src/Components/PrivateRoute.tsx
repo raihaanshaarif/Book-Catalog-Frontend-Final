@@ -12,8 +12,9 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
   ...rest
 }: PrivateRouteProps) => {
   // const user = useAppSelector((state: RootState) => state.auth.user);
-  const isAuthenticated = localStorage.getItem("user") !== null;
-  console.log(isAuthenticated);
+  const isAuthenticated = localStorage?.getItem("setCredentials") !== null;
+  console.log(localStorage?.getItem("setCredentials"));
+  console.log(rest);
 
   const location = useLocation();
 
